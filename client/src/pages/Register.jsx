@@ -4,7 +4,7 @@ import signupImage from '../assets/signupImage.jpg';
 import googleLogo from '../assets/googleLogo.jpg';
 import axios from "axios";
 import { useState } from "react";
-
+import { useNavigate } from "react";
 
 const Register = () => {
 
@@ -15,15 +15,17 @@ const Register = () => {
   })
   const [err,setError] = useState(null)
 
+  const navigate = useNavigate()
+
   const handleChange = e => {
     setInputs(prev => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
   const handleSubmit = async e => {
-    e.preventDefault()
-
+    e.preventDefault();
     try {
-      const res = await axios.post("/auth/register", inputs)
+      const res = await axios.post("/auth/register", inputs);
+      navigate("/login");
       console.log(res)
     } catch (err) {
       setError(err.response.data);

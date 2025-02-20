@@ -2,8 +2,33 @@ import React from 'react'
 import { Link } from "react-router-dom";
 import signupImage from '../assets/signupImage.jpg'; 
 import googleLogo from '../assets/googleLogo.jpg'; 
+import { useState } from "react";
+import axios from "axios";
+
 
 const Login = () => {
+
+  const [inputs, setInputs] = useState({
+    username: "",
+    email: "",
+    password: "",
+  })
+  const [err,setError] = useState(null)
+
+  const handleChange = e => {
+    setInputs(prev => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    try {
+      const res = await axios.post("/auth/login", inputs);
+      console.log(res)
+    } catch (err) {
+      setError(err.response.data);
+    }
+  }
+
   return (
     <div className="auth-container">
       <div className="auth">
@@ -18,10 +43,10 @@ const Login = () => {
           <div className="divider">or</div>
           
           <form>
-            <input required type="email" placeholder="Email" />
-            <input required type="password" placeholder="Password" />
-            <button className="login-btn">Sign in</button>
-            <p className="error-message">This is an error!</p>
+            <input required type="email" placeholder="Email" name="email" onChange={handleChange} />
+            <input required type="password" placeholder="Password" name="password" onChange={handleChange} />
+            <button onClick={handleSubmit}className="login-btn">Sign in</button>
+            {err && <p className="error-message">This is an error!</p>}
             <span>Don't have an account? <Link to="/register">Register</Link></span>
           </form>
         </div>
