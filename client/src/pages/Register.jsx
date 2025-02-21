@@ -4,7 +4,8 @@ import signupImage from '../assets/signupImage.jpg';
 import googleLogo from '../assets/googleLogo.jpg';
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 const Register = () => {
 
@@ -24,13 +25,14 @@ const Register = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const res = await axios.post("/auth/register", inputs);
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/register`, inputs);
       navigate("/login");
-      console.log(res)
+      console.log(res);
     } catch (err) {
       setError(err.response.data);
     }
-  }
+  };
+  
 
   return (
     <div className="auth-container">

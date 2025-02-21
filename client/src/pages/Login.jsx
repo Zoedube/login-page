@@ -22,12 +22,15 @@ const Login = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const res = await axios.post("/auth/login", inputs);
-      console.log(res)
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, inputs, {
+        withCredentials: true
+      });
+      console.log(res);
     } catch (err) {
       setError(err.response.data);
     }
-  }
+  };
+  
 
   return (
     <div className="auth-container">
@@ -43,7 +46,7 @@ const Login = () => {
           <div className="divider">or</div>
           
           <form>
-            <input required type="email" placeholder="Email" name="email" onChange={handleChange} />
+            <input required type="username" placeholder="username" name="username" onChange={handleChange} />
             <input required type="password" placeholder="Password" name="password" onChange={handleChange} />
             <button onClick={handleSubmit}className="login-btn">Sign in</button>
             {err && <p className="error-message">This is an error!</p>}
