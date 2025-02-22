@@ -1,10 +1,10 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import signupImage from '../assets/signupImage.jpg';
 import googleLogo from '../assets/googleLogo.jpg';
 import axios from "axios";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify"; 
+import "react-toastify/dist/ReactToastify.css"; 
 
 
 const Register = () => {
@@ -14,25 +14,51 @@ const Register = () => {
     email: "",
     password: "",
   })
-  const [err,setError] = useState(null)
+  const [err,setError] = useState(null);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  //Code for popup after logging in successfully
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search); // Use location.search
+    const token = urlParams.get("token");
+    const googleSuccess = urlParams.get("googleSuccess");
+
+    if (token && googleSuccess === "true") {
+      localStorage.setItem("access_token", token);
+      toast.success("Successfully registered/logged in with Google!");
+      window.history.replaceState({}, document.title, "/register");
+    }
+  }, [location.search]);
 
   const handleChange = e => {
     setInputs(prev => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log("Sending registration request with:", inputs); 
       const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/register`, inputs);
-      navigate("/login");
-      console.log(res);
+      console.log("Registration response:", res.data); 
+      toast.success("Successfully registered! Please log in.", {
+        position: "top-right",
+        autoClose: 3000,
+      }); 
+      setInputs({ username: "", email: "", password: "" });
+      setTimeout(() => navigate("/login"), 2000); 
     } catch (err) {
-      setError(err.response.data);
+      console.error("Registration error:", err.response?.data || err.message);
+      setError(err.response?.data);
+      toast.error("Registration failed. Please try again.");
     }
   };
   
+  // Function to Google OAuth
+  const handleGoogleLogin = () => {
+    window.location.href = `${process.env.REACT_APP_API_URL}/api/auth/google?returnTo=register`;
+  };
 
   return (
     <div className="auth-container">
@@ -41,7 +67,7 @@ const Register = () => {
           <h1>Sign Up</h1>
           <h2>Create an account to get started.</h2>
 
-          <button className="google-btn">
+          <button className="google-btn" onClick={handleGoogleLogin}>
             <img src={googleLogo} alt="Google Logo" />
             Continue With Google
           </button>
@@ -59,17 +85,18 @@ const Register = () => {
             </div>
 
             <button type="submit" className="register-btn">Register</button>
-            {err & <p className="error-message">This is an error!</p>}
+            {err && <p className="error-message">This is an error!</p>}
             <span>Already have an account? <Link to="/login">Log in</Link></span>
           </form>
 
         </div>
       </div>
 
-      {/* Right-side image */}
+  
       <div className="image-container">
         <img src={signupImage} alt="Abstract Design" />
       </div>
+      <ToastContainer />
     </div>
   );
 };
