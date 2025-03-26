@@ -14,6 +14,3 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
-
-REACT_APP_API_URL=http://localhost:8800
-JWT_SECRET=supersecretkey123!@
