@@ -4,8 +4,10 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const db = mysql.createConnection({
-  host:"localhost",
-  user:"root",
-  password:"Zoedube555_",
-  database:"login"
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  port: process.env.DB_PORT,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 })
+
