@@ -88,3 +88,13 @@ const PORT = process.env.PORT || 8800;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+PORT=8800 
+DB_HOST=turntable.proxy.rlwy.net
+DB_USER=root
+DB_PASSWORD=tETKIGwGzbrVZZZXDUtlfRjfmZqhQGYx
+DB_NAME=railway
+DB_PORT=27594
+JWT_SECRET=supersecretkey123!@
+GOOGLE_CLIENT_ID=879379905855-0272o4uepcqoqk7b7rvabd145cq2i3kg.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=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
