@@ -21,7 +21,7 @@ const Register = () => {
 
   //Code for popup after logging in successfully
   useEffect(() => {
-    const urlParams = new URLSearchParams(location.search); // Use location.search
+    const urlParams = new URLSearchParams(location.search);
     const token = urlParams.get("token");
     const googleSuccess = urlParams.get("googleSuccess");
 
@@ -40,7 +40,7 @@ const Register = () => {
     e.preventDefault();
     try {
       console.log("Sending registration request with:", inputs); 
-      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/register`, inputs);
+      const res = await axios.post("https://login-page-1-g98u.onrender.com/api/auth/register", inputs);
       console.log("Registration response:", res.data); 
       toast.success("Successfully registered! Please log in.", {
         position: "top-right",
@@ -57,7 +57,7 @@ const Register = () => {
   
   // Function to Google OAuth
   const handleGoogleLogin = () => {
-    window.location.href = `${process.env.REACT_APP_API_URL}/api/auth/google?returnTo=register`;
+    window.location.href = "https://login-page-1-g98u.onrender.com/api/auth/google?returnTo=register";
   };
 
   return (

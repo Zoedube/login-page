@@ -33,7 +33,7 @@ useEffect(() => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8800/api/auth/login", {
+      const res = await axios.post("https://login-page-1-g98u.onrender.com/api/auth/login", {
         username: inputs.username,
         password: inputs.password,
       });
@@ -50,7 +50,7 @@ useEffect(() => {
 
 // Code for function to Google OAuth
 const handleGoogleLogin = () => {
-  window.location.href = "http://localhost:8800/api/auth/google?returnTo=login";
+  window.location.href = "https://login-page-1-g98u.onrender.com/api/auth/google?returnTo=login";
 };
 
   return (
