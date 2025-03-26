@@ -17,7 +17,7 @@ const app = express()
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: "https://login-pi-ecru.vercel.app",
   credentials: true,
 }));
 app.use(session({ secret: process.env.JWT_SECRET, resave: false, saveUninitialized: false })); 
@@ -30,7 +30,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:8800/api/auth/google/callback",
+      callbackURL: "https://login-page-1-g98u.onrender.com/api/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
       console.log("Google Profile:", profile); 

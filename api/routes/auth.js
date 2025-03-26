@@ -14,7 +14,7 @@ router.get("/google", googleAuth);
 router.get(
   "/google/callback",
   (req, res, next) => {
-    passport.authenticate("google", { failureRedirect: "/login", session: true }, (err, user, info) => {
+    passport.authenticate("google", { failureRedirect: "https://login-pi-ecru.vercel.app/login", session: true }, (err, user, info) => {
       if (err) {
         console.error("Passport Auth Error:", err); 
         return res.status(500).json({ message: "Authentication failed", error: err.message });

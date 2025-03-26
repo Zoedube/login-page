@@ -26,7 +26,7 @@ export const googleCallback = (req, res) => {
   );
   
   const redirectTo = req.session.returnTo || "login"; 
-  res.redirect(`http://localhost:3000/${redirectTo}?token=${token}&googleSuccess=true`);
+  res.redirect(`https://login-pi-ecru.vercel.app/${redirectTo}?token=${token}&googleSuccess=true`);
 };
 
 export const register = (req, res) => {
